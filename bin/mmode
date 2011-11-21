@@ -1,0 +1,6 @@
+#!/usr/bin/env ruby
+
+require 'mmode'
+require 'mmode/cli'
+
+Mmode::CLI.start
