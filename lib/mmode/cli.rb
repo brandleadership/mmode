@@ -4,14 +4,26 @@ module Mmode
   class CLI < Thor
 
     desc 'enable [USER]', 'Enable maintenance mode for given user'
-    def enable(user)
-      `ssh scrcpt2.nine.ch 'touch /home/usr/screenconcept/maintenance.txt; sudo monit unmonitor -g thin_#{user}'`
+
+    def enable(name)
+      user = User.new(name)
+      if user.exists?
+        user.enable
+      else
+        puts 'User does not exist!'
+      end
     end
 
     desc 'disable [USER]', 'Disable maintenance mode for given user'
-    def disable(user)
-      `ssh scrcpt2.nine.ch 'rm /home/usr/screenconcept/maintenance.txt; sudo monit monitor -g thin_#{user}'`
-    end
 
+    def disable(name)
+      user = User.new(name)
+      if user.exists?
+        user.disable
+      else
+        puts 'User does not exist!'
+      end
+    end
   end
 end
+
