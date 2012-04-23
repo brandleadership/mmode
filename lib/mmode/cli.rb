@@ -1,4 +1,5 @@
 require 'thor'
+require 'mmode/user'
 
 module Mmode
   class CLI < Thor
