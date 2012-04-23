@@ -1,3 +1,5 @@
+require 'mmode/user'
+
 module Mmode
   class User
 
