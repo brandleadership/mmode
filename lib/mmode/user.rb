@@ -9,16 +9,26 @@ module Mmode
       @name = name
     end
 
-    def exists?
-      File.exists? "/home/usr/#{@name}"
-    end
-
     def enable
-      `ssh scrcpt2.nine.ch 'touch /home/usr/screenconcept/maintenance.txt; sudo monit unmonitor -g thin_#{@name}'`
+      run_if_user_exists "touch /home/usr/screenconcept/maintenance.txt; sudo monit unmonitor -g thin_#{@name}"
     end
 
     def disable
-      `ssh scrcpt2.nine.ch 'rm /home/usr/screenconcept/maintenance.txt; sudo monit monitor -g thin_#{@name}'`
+      run_if_user_exists "rm /home/usr/screenconcept/maintenance.txt; sudo monit monitor -g thin_#{@name}"
+    end
+
+    private
+
+    def homedir
+      "/home/usr/#{name}"
+    end
+
+    def run_if_user_exists(command)
+      `ssh scrcpt2.nine.ch "if [ -d '#{homedir}' ]; then #{command}; else echo #{error}; fi"`
+    end
+
+    def error
+      "User does not exist!"
     end
   end
 end
