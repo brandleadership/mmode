@@ -1,6 +1,5 @@
 module Mmode
   class User
-
     attr_accessor :name
 
     def initialize(name)
@@ -22,7 +21,7 @@ module Mmode
     end
 
     def run_if_user_exists(command)
-      "ssh scrcpt2.nine.ch \"if [ -d '#{homedir}' ]; then #{command}; else echo #{error}; fi\""
+      `ssh scrcpt2.nine.ch \"if [ -d '#{homedir}' ]; then #{command}; else echo #{error}; fi\"`
     end
 
     def error
